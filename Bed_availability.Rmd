@@ -1,16 +1,16 @@
 ---
-title: "Bed availability"
+title: "Bed availability in West Bengal"
 output: html_notebook
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+
 ---
 
-# Bed availability in West Bengal
 ```{r echo=FALSE,message=FALSE}
 library(tabulizer)
 library(dplyr)
 
 ```
 
+## Updated on 27th April 2021
 
 ```{r echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
 out <- extract_tables("data/pvt/Status_of_Vacant_Beds_as_on_27th_April,.2021_.pdf")
