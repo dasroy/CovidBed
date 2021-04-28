@@ -91,3 +91,4 @@ DT::datatable(all_ovid_hosp[,2:6], rownames=FALSE, options = list(
 ))
 ```
 
+#### [Feedback](https://github.com/dasroy/CovidBed/issues)
