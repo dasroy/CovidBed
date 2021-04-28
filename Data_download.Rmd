@@ -1,0 +1,15 @@
+---
+title: "Data download"
+output: html_notebook
+---
+
+
+```{bash}
+cd data
+# private hospital
+wget -P data/pvt https://www.wbhealth.gov.in/uploaded_files/corona/Status_of_Vacant_Beds_as_on_27th_April,.2021_.pdf
+
+# govt hospital
+wget -P data/govt https://www.wbhealth.gov.in/uploaded_files/corona/Vacant_bed_status_as_on_27.04_.2021_(1)_.pdf
+```
+

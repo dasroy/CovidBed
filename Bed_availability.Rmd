@@ -1,0 +1,90 @@
+---
+title: "Bed availability"
+output: html_notebook
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+
+# Bed availability in West Bengal
+```{r echo=FALSE,message=FALSE}
+library(tabulizer)
+library(dplyr)
+
+```
+
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
+out <- extract_tables("data/pvt/Status_of_Vacant_Beds_as_on_27th_April,.2021_.pdf")
+pvt_hosp <- do.call(rbind, out)
+# table headers get extracted as rows with bad formatting. Dump them.
+pvt_hosp <- as.data.frame(pvt_hosp[3:nrow(pvt_hosp), ])
+
+# Column names
+headers <- c("Sl","District","Hospital", "Beds", "Vacancy")
+
+# Apply custom column names
+names(pvt_hosp) <- headers
+
+# head(pvt_hosp)
+```
+
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
+pvt_hosp$Sl[pvt_hosp$Sl == ""] <- NA
+format_pvt_hosp <- pvt_hosp %>% tidyr::fill(Sl)
+format_pvt_hosp$Sl <- as.numeric(gsub('.{1}$', '',format_pvt_hosp$Sl))
+
+format_pvt_hosp <- format_pvt_hosp %>%
+  group_by(Sl) %>%
+  summarise(District=paste(District,collapse=' '), 
+            Hospital=paste(Hospital,collapse=' '),
+            Beds=paste(Beds,collapse=' '), 
+            Vacancy=paste(Vacancy,collapse=' ')) 
+
+format_pvt_hosp$Type <- "Private"
+format_pvt_hosp <- format_pvt_hosp %>% arrange(Vacancy)
+```
+
+
+```{r govt,echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
+out <- extract_tables("data/govt/Vacant_bed_status_as_on_27.04_.2021_(1)_.pdf")
+govt_hosp <- do.call(rbind, out)
+# table headers get extracted as rows with bad formatting. Dump them.
+govt_hosp <- as.data.frame(govt_hosp[3:nrow(govt_hosp), ])
+
+# Column names
+headers <- c("Sl","District","Hospital", "Beds", "Vacancy")
+
+# Apply custom column names
+names(govt_hosp) <- headers
+
+# govt_hosp[grep("District",govt_hosp$District),] <- NA
+# head(govt_hosp)
+```
+
+
+```{r echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
+govt_hosp$Sl[govt_hosp$Sl == ""] <- NA
+format_govt_hosp <- govt_hosp %>% tidyr::fill(Sl)
+# format_govt_hosp$Sl <- as.numeric(gsub('.{1}$', '',format_govt_hosp$Sl))
+
+format_govt_hosp <- format_govt_hosp %>%
+  group_by(Sl) %>%
+  summarise(District=paste(District,collapse=' '), 
+            Hospital=paste(Hospital,collapse=' '),
+            Beds=paste(Beds,collapse=' '), 
+            Vacancy=paste(Vacancy,collapse=' ')) 
+
+format_govt_hosp$Type <- "Govt."
+format_govt_hosp <- format_govt_hosp %>% arrange(Vacancy)
+```
+
+
+```{r echo=FALSE}
+all_ovid_hosp <- rbind(format_govt_hosp,format_pvt_hosp)
+DT::datatable(all_ovid_hosp, rownames=FALSE, options = list(
+  columnDefs = list(list(className = 'dt-center', targets = 5)),
+  pageLength = 10,
+  lengthMenu = c(5, 10, 15, 20)
+))
+```
+
