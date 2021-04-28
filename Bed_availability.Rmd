@@ -14,7 +14,7 @@ library(dplyr)
 
 ### Source: 
 
-Department of Health & Family Welfare (GOVT. of WB)[https://www.wbhealth.gov.in/]
+Department of Health & Family Welfare [(GOVT. of WB)](https://www.wbhealth.gov.in/)
 
 ```{r echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
 out <- extract_tables("data/pvt/Status_of_Vacant_Beds_as_on_27th_April,.2021_.pdf")
@@ -86,7 +86,6 @@ format_govt_hosp$Type <- "Govt."
 ```{r echo=FALSE}
 all_ovid_hosp <- rbind(format_govt_hosp,format_pvt_hosp)
 DT::datatable(all_ovid_hosp[,2:6], rownames=FALSE, options = list(
-  columnDefs = list(list(className = 'dt-center', targets = 5)),
   pageLength = 10,
   lengthMenu = c(5, 10, 15, 20)
 ))
