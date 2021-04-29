@@ -10,6 +10,12 @@ library(dplyr)
 
 ```
 
+# Update: 
+
+### Finally an online portal is available from the govt https://excise.wb.gov.in/CHMS/Public/Page/CHMS_Public_Hospital_Bed_Availability.aspx
+
+just in news : https://www.anandabazar.com/west-bengal/coronavirus-in-west-bengal-an-initiative-of-state-govt-to-apply-online-for-beds-in-govt-hospitals-dgtl/cid/1278494
+
 ## Updated on 28th April 2021
 
 ### Source: 
