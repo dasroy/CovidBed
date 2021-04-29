@@ -10,14 +10,16 @@ library(dplyr)
 
 ```
 
-## Updated on 27th April 2021
+## Updated on 28th April 2021
 
 ### Source: 
 
 Department of Health & Family Welfare [(GOVT. of WB)](https://www.wbhealth.gov.in/)
 
+!!! No data for Govt hospital is available
+
 ```{r echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
-out <- extract_tables("data/pvt/Status_of_Vacant_Beds_as_on_27th_April,.2021_.pdf")
+out <- extract_tables("data/pvt/Status_of_Vacant_Beds_as_on_28th_April,.2021_.pdf")
 pvt_hosp <- do.call(rbind, out)
 # table headers get extracted as rows with bad formatting. Dump them.
 pvt_hosp <- as.data.frame(pvt_hosp[3:nrow(pvt_hosp), ])
@@ -46,6 +48,16 @@ format_pvt_hosp <- format_pvt_hosp %>%
 
 format_pvt_hosp$Type <- "Private"
 format_pvt_hosp <- format_pvt_hosp %>% arrange(Vacancy)
+```
+
+
+```{r echo=FALSE}
+DT::datatable(
+  format_pvt_hosp[!is.na(as.numeric(as.character(format_pvt_hosp$Vacancy))), 2:6],
+  rownames = FALSE,
+  options = list(pageLength = 10,
+                 lengthMenu = c(5, 10, 15, 20))
+)
 ```
 
 
@@ -85,10 +97,14 @@ format_govt_hosp$Type <- "Govt."
 
 ```{r echo=FALSE}
 all_ovid_hosp <- rbind(format_govt_hosp,format_pvt_hosp)
-DT::datatable(all_ovid_hosp[,2:6], rownames=FALSE, options = list(
-  pageLength = 10,
-  lengthMenu = c(5, 10, 15, 20)
-))
+
+DT::datatable(
+  all_ovid_hosp[!is.na(as.numeric(as.character(all_ovid_hosp$Vacancy))), 2:6]
+  ,
+  rownames = FALSE,
+  options = list(pageLength = 10,
+                 lengthMenu = c(5, 10, 15, 20))
+)
 ```
 
 #### [Feedback](https://github.com/dasroy/CovidBed/issues)
