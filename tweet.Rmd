@@ -1,0 +1,38 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+twitter [authentication](https://cran.r-project.org/web/packages/rtweet/vignettes/auth.html)
+
+
+```{r}
+if (!requireNamespace("httpuv", quietly = TRUE)) {
+  install.packages("httpuv")
+}
+```
+
+https://www.earthdatascience.org/courses/earth-analytics/get-data-using-apis/use-twitter-api-r/
+
+```{r}
+## load rtweet
+library(rtweet)
+
+## store api keys (these are fake example values; replace with your own keys)
+api_key <- "dOJFngxhkbcStKYjSjCYtsdo9"
+api_secret_key <- "PimFPl7Ahp9NKr3quSdn1kQZfvdIe6PLbatPhIxot700HrmfVW"
+
+## authenticate via web browser
+token <- create_token(
+  app = "CovidBedWB",
+  consumer_key = api_key,
+  consumer_secret = api_secret_key,
+  access_token = "68420162-eEFPy7QbKpNXl4MNSOYgBOO7CW6FbMsCowU1D3QWj",
+  access_secret = "ROlKgdbK41W1AlaYx0yFmQdC2EWhMFNZPisfDIj0hExdk")
+```
+
+
+```{r }
+post_tweet("2  beds are available in Hospital J N RAY Hospital (Jitendra Narayan Ray Sishu Seva  Bbawan) # Kolkata West Bengal \n Source:https://www.wbhealth.gov.in/")
+```
+

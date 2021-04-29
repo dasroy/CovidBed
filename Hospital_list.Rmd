@@ -78,6 +78,8 @@ format_govt_hosp$Type <- "Govt."
 ```{r echo=FALSE}
 all_ovid_hosp <- rbind(format_govt_hosp,format_pvt_hosp)
 colnames(all_ovid_hosp)
-write.csv(all_ovid_hosp[,c( "District", "Hospital", "Type")],file = "WB_hospitals.csv", row.names = FALSE)
+all_ovid_hosp$Address <- "Not available"
+all_ovid_hosp$Phone <- "Not available"
+write.csv(all_ovid_hosp[,c( "District", "Hospital", "Type","Address","Phone")],file = "WB_hospitals.csv", row.names = FALSE)
 ```
 

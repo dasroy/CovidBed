@@ -18,6 +18,10 @@ Department of Health & Family Welfare [(GOVT. of WB)](https://www.wbhealth.gov.i
 
 !!! No data for Govt hospital is available
 
+```{r echo=FALSE}
+dataDate ="28/04/21"
+```
+
 ```{r echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
 out <- extract_tables("data/pvt/Status_of_Vacant_Beds_as_on_28th_April,.2021_.pdf")
 pvt_hosp <- do.call(rbind, out)
@@ -58,6 +62,12 @@ DT::datatable(
   options = list(pageLength = 10,
                  lengthMenu = c(5, 10, 15, 20))
 )
+```
+```{r tweet_pvt,echo=FALSE}
+source("common_function.R")
+
+tweet_table <- format_pvt_hosp[!is.na(as.numeric(as.character(format_pvt_hosp$Vacancy))), 2:6]
+tweet_dataTable(tweet_table,dateString = dataDate)
 ```
 
 
